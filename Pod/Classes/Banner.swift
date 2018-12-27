@@ -329,8 +329,8 @@ open class Banner: UIView {
   
     /// Shows the banner. If a view is specified, the banner will be displayed at the top of that view, otherwise at top of the top window. If a `duration` is specified, the banner dismisses itself automatically after that duration elapses.
     /// - parameter view: A view the banner will be shown in. Optional. Defaults to 'nil', which in turn means it will be shown in the top window. duration A time interval, after which the banner will dismiss itself. Optional. Defaults to `nil`.
-    @objc open func show(_ view: UIView? = nil) {
-        show(view, duration: nil)
+    @objc open func show(_ view: UIView? = nil, duration: Int) {
+        show(view, duration: Double(exactly: duration))
     }
     
     open func show(_ view: UIView? = nil, duration: TimeInterval? = nil) {
@@ -357,6 +357,10 @@ open class Banner: UIView {
     }
   
     /// Dismisses the banner.
+    @objc open func dismiss() {
+      dismiss(nil)
+    }
+
     open func dismiss(_ oldStatusBarStyle: UIStatusBarStyle? = nil) {
         let (damping, velocity) = self.springiness.springValues
         UIView.animate(withDuration: animationDuration, delay: 0.0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: .allowUserInteraction, animations: {
