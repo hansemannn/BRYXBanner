@@ -15,7 +15,7 @@ private enum BannerState {
 ///
 /// - Top: The banner will appear at the top.
 /// - Bottom: The banner will appear at the bottom.
-public enum BannerPosition {
+@objc public enum BannerPosition: IntegerLiteralType {
     case top, bottom
 }
 
@@ -60,10 +60,10 @@ open class Banner: UIView {
     @objc open var adjustsStatusBarStyle = false
     
     /// Wheter the banner should appear at the top or the bottom of the screen. Defaults to `.Top`.
-    open var position = BannerPosition.top
+    @objc open var position: BannerPosition = .top
 
     /// How 'springy' the banner should display. Defaults to `.Slight`
-    open var springiness = BannerSpringiness.slight
+    open var springiness: BannerSpringiness = .slight
     
     /// The color of the text as well as the image tint color if `shouldTintImage` is `true`.
     @objc open var textColor = UIColor.white {
@@ -329,10 +329,10 @@ open class Banner: UIView {
   
     /// Shows the banner. If a view is specified, the banner will be displayed at the top of that view, otherwise at top of the top window. If a `duration` is specified, the banner dismisses itself automatically after that duration elapses.
     /// - parameter view: A view the banner will be shown in. Optional. Defaults to 'nil', which in turn means it will be shown in the top window. duration A time interval, after which the banner will dismiss itself. Optional. Defaults to `nil`.
-    @objc open func show(_ view: UIView? = nil, duration: Int) {
-        show(view, duration: Double(exactly: duration))
+    @objc open func show(_ view: UIView? = nil, duration: Double) {
+        show(view, duration: TimeInterval(exactly: duration))
     }
-    
+
     open func show(_ view: UIView? = nil, duration: TimeInterval? = nil) {
         let viewToUse = view ?? Banner.topWindow()
         guard let view = viewToUse else {
